@@ -1,0 +1,11 @@
+.x-content li {
+    float: left;
+    list-style: none;
+    padding: 10px;
+}
+
+.x-content {
+    margin: 0;
+    padding: 0;
+}
+

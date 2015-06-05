@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <title>page</title>
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/main.css"/>
+</head>
+<body>
+    <div ng-controller="init">
+        <page current-page="currentPage" show-page="showPage" account-num="accountNum"></page>
+    </div>
+    <script type="text/javascript" src="scripts/angular.min.js"></script>
+    <script type="text/javascript">
+        /**
+         * 定义一个app模块
+         * @type {*|module}
+         */
+        var app = angular.module("demo", []);
+
+
+        /**
+         * 提供数据的服务
+         */
+        app.factory("dataService", function(){
+            return {
+                results: [
+                    "1", "2", "3", "4", "5",
+                    "6", "7", "8", "9", "10",
+                    "11", "12", "13", "14", "15",
+                    "16", "17", "18", "19", "20",
+                    "21", "22", "23", "24", "25",
+                    "26", "27", "28", "29", "30",
+                    "31", "32", "33", "34", "35",
+                    "36", "37", "38", "39", "40",
+                    "41", "42", "43", "44", "45",
+                    "46", "47", "48", "49", "50",
+                    "51", "52", "53", "54", "55",
+                    "56", "57", "58", "59", "60"
+                ]
+            };
+        });
+
+
+        /**
+         * page指令配套的服务，主要绑定事件，处理业务逻辑和插件初始化。
+         */
+        app.service("pageService", function(){
+            var prev, next, _data = [];
+            function turnPage(opt, currentPage, showPage, accountNum, data, $scope){
+                if(opt == "prev"){
+                    if(currentPage <= 1){
+                        return ;
+                    }else{
+                        currentPage = currentPage - 1;
+
+                    }
+                }else if(opt == "next"){
+                    if(currentPage >= Math.ceil(accountNum / showPage)){
+                        return ;
+                    }else {
+                        currentPage = currentPage + 1;
+                    }
+                }else{
+                    currentPage = 1;
+                }
+                _data = data.slice((currentPage - 1) * showPage, currentPage * showPage);
+                $scope.currentPage = currentPage;
+                $scope.showPage = showPage;
+                $scope.items = _data;
+            }
+            this.init = function($scope, data, currentPage, showPage, accountNum){
+                prev = function(currentPage, showPage, accountNum){
+                    turnPage("prev", currentPage, showPage, accountNum, data, $scope);
+
+                };
+                next = function(currentPage, showPage, accountNum){
+                    turnPage("next", currentPage, showPage, accountNum, data, $scope)
+                };
+                $scope.prev = prev;
+                $scope.next = next;
+                turnPage('', currentPage, showPage, accountNum, data, $scope);
+                $scope.accountNum = data.length;
+            };
+
+
+
+        });
+
+
+        /**
+         * 用户自定义初始化插件参数。
+         */
+        app.controller("init", ["$scope", function($scope){
+            $scope.currentPage = 1;
+            $scope.showPage = 10;
+            $scope.accountNum = 0;
+        }]);
+
+
+        /**
+         * page指令主体
+         */
+        app.directive("page", ["dataService", "pageService", function(dataService, pageService){
+            var data = dataService.results;
+            return {
+                restrict: 'E',
+                scope: {
+                    currentPage: '=',
+                    showPage: '=',
+                    accountNum: '='
+                },
+                templateUrl: "tmpl/page-tmpl.html",
+                link: function($scope, element, attributes){
+                    var currentPage = $scope.currentPage,
+                            showPage = $scope.showPage,
+                            accountNum = $scope.accountNum;
+                    pageService.init($scope, data, currentPage, showPage, accountNum);
+                }
+            };
+        }]);
+    </script>
+</body>
+</html>

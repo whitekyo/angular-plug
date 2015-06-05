@@ -1,0 +1,22 @@
+<ul class="x-content clearfix">
+    <li ng-repeat="item in items">
+        {{item}}
+    </li>
+</ul>
+<ul class="x-content clearfix">
+    <li>currentPage: {{currentPage}}</li>
+    <li>showPage: {{showPage}}</li>
+    <li>accountNum: {{accountNum}}</li>
+</ul>
+<ul class="pagination">
+    <li>
+        <a href="javascript:void(0)" ng-click="prev(currentPage, showPage, accountNum)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    <li>
+        <a href="javascript:void(0)" ng-click="next(currentPage, showPage, accountNum)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+</ul>
