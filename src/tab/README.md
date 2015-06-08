@@ -1,1 +1,1 @@
-﻿<h2>采用angluar的directive实现tab页切换</h2>
+﻿<h2>采用angluar的directive实现tab页切换,包含一个纯css实现的tab页切换</h2>
