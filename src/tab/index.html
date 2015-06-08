@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>tab</title>
+    <link type="text/css" rel="stylesheet" href="../common/styles/bootstrap.min.css"/>
+</head>
+<body>
+    <div ng-controller="customCtrl">
+        <tab></tab>
+    </div>
+    <script type="text/javascript" src="../common/scripts/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module("demo", []);
+        app.factory("customData", function(){
+            return [
+                {
+                    name: "javascript",
+                    content: "content1"
+                },
+                {
+                    name: "css",
+                    content: "content2"
+                },
+                {
+                    name: "html",
+                    content: "content3"
+                }
+            ];
+        });
+        app.controller("customCtrl", ["$scope", function($scope){
+
+        }]);
+
+        app.service("tabService", function(){
+            this.init = function($scope, tabData){
+                $scope.tabs = tabData;
+                $scope.setTab = function(tab){
+                    $scope.currentTab = tab;
+                };
+            }
+        });
+
+        app.directive("tab", ["customData", "tabService", function(customData, tabService){
+            var tabData = customData;
+            console.log(tabData);
+            return {
+                restrict: 'E',
+                scope: {},
+                templateUrl: "tmpl/tab-tmpl.html",
+                link: function($scope, element, attributes){
+                    tabService.init($scope, tabData);
+                }
+            };
+        }]);
+    </script>
+</body>
+</html>

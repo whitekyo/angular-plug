@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-repeat="tab in tabs"><a href="javascript:void(0);" ng-click="setTab(tab)" ng-bind="tab.name"></a></li>
+</ul>
+<div ng-switch on="currentTab.name">
+    <!--<div ng-repeat="tab in tabs" ng-switch-when="currentTab.name">{{currentTab.content}}</div>-->
+    <div ng-switch-when="javascript">{{currentTab.content}}</div>
+    <div ng-switch-when="css">{{currentTab.content}}</div>
+    <div ng-switch-when="html">{{currentTab.content}}</div>
+    <div ng-switch-default class="tab-pane">
+        <p>No Content!</p>
+    </div>
+</div>
+
+<div ng-repeat="a in A" ng-switch-when="a.name"></div>
+
+
+<!--<div ng-switch-when="javascript" class="red">{{currentTab.content}}</div>
+    <div ng-switch-when="css" class="blue">{{currentTab.content}}</div>
+    <div ng-switch-when="html" class="green">{{currentTab.content}}</div>-->
