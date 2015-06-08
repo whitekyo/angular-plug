@@ -1,0 +1,1 @@
+﻿<h2>采用angluar的directive实现tab页切换</h2>

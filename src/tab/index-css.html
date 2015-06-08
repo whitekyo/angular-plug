@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>tab-css版本</title>
+    <link type="text/css" rel="stylesheet" href="../common/styles/bootstrap.min.css"/>
+    <style type="text/css">
+        #tab1:target,
+        #tab2:target,
+        #tab3:target {
+            z-index: 1;
+        }
+        .tab_content {
+            position: absolute;
+            color:#666;
+            background:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="tablist">
+        <ul class="nav nav-tabs">
+            <li><a href="#tab1">标签一</a></li>
+            <li><a href="#tab2">标签二</a></li>
+            <li><a href="#tab3">标签三</a></li>
+        </ul>
+        <div id="tab1" class="tab_content">
+            content1
+        </div>
+        <div id="tab2" class="tab_content">
+            content2
+        </div>
+        <div id="tab3" class="tab_content">
+            content3
+        </div>
+    </div>
+</body>
+</html>

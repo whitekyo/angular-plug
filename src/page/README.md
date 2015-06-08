@@ -1,0 +1,1 @@
+﻿<h2>采用angluar的directive实现分页组件</h2>

@@ -1,1 +1,1 @@
-﻿<h2>采用angluar的directive实现一个分页demo,选项卡demo</h2>
+﻿<h2>采用angluar的directive实现一些UI组件</h2>
