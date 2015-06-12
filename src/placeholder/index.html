@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+	<meta charset="UTF-8">
+	<title>placeholder</title>
+</head>
+<body>
+	<div ng-controller="customCtrl">
+		<input type="text" p data-placeholder="1111">
+		<input type="text" p data-placeholder="1">
+		<input type="text" p data-placeholder="22">
+	</div>
+	<script type="text/javascript" src="../common/scripts/angular.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-1.7.1.js"></script>
+	<script type="text/javascript">
+		var app = angular.module("demo", []);
+
+		app.controller("customCtrl", ["$scope", function($scope){
+
+		}]);
+
+		app.service("placeholder", [function(){
+			this.isInit = function(){
+                return 
+                	!("placeholder" in document.createElement('input')
+
+                 	&&
+
+                 	"placeholder" in document.createElement('textarea'));
+			};
+			this.getPlaceholderCssStyle = function(content){
+				return {
+	                position: content.css('position'),
+	                color: content.css('color'),
+	                width: content.width()?content.width():0,
+	                height: content.height()?content.height():0,
+	                left: content.position().left?content.position().left:0,
+	                top: content.position().top?content.position().top:0,
+	                text: content.attr('data-placeholder')
+            	}
+			};
+			this.createHolder = function(content){
+				var cssRule = this.getPlaceholderCssStyle(content);
+	            var str = '';
+	            if(cssRule.position == 'static' || cssRule.position == 'relative'){
+	                content.wrap('<div class="x-placeholder-ie-layout"></div>');
+	                str = '<span style="color:'+ cssRule.color +';position:absolute;width:'+ cssRule.width/2 +';height:'+ cssRule.height + ';top:'+ (cssRule.top + 2) + 'px' +';left:'+ (cssRule.left + 2) + 'px' + ';">'+ cssRule.text + '</span>';
+	                content.after(str);
+	            }else if(cssRule.position == 'absolute'){
+	                str = '<span style="color:'+ cssRule.color +';position:absolute;width:'+ cssRule.width/2 +';height:'+ cssRule.height + ';top:'+ (cssRule.top + 2) + 'px' +';left:'+ (cssRule.left + 2) + 'px' + ';">'+ cssRule.text + '</span>'
+	                content.after(str);
+	            }
+            	this.bindPlaceholderEvent(content);
+			};
+			this.bindPlaceholderEvent = function(content){
+				content.focus(function(){
+                	$(this).next("span").hide();
+	            });
+	            content.blur(function(){
+	            	if(content.val() == ""){
+	            		$(this).next("span").show();
+	            	}
+	                
+	            });
+	            content.on('placeholderChange',function(){
+	                var placeholder = this.getAttribute('data-placeholder');
+	                $(this).next().html(placeholder);
+	            });
+			};
+			this.getStyle = function(el, name){
+				if(el.style){
+					name = name.replace(/\-(\w)/g, function(all, letter){
+						return letter.toUpperCase();
+					});
+					if(window.getComputedStyle){
+						return window.getComputedStyle(el, null)[ name ]
+					}else{
+						return el.currentStyle[ name ];
+					}
+				}
+			};
+		}]);
+
+		app.directive("p", ["placeholder", function(placeholder){
+			return {
+				restrict: 'A',
+                scope: {
+
+                },
+                link: function($scope, element, attributes){
+                	placeholder.createHolder($(element[0]));
+                }
+			};
+		}]);
+	</script>
+</body>
+</html>
