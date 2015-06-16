@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>angular for getStyle</title>
+    <style type="text/css">
+        .class1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="class1"></div>
+    <script type="text/javascript" src="../common/scripts/angular.min.js"></script>
+    <script type="text/javascript" src="../plugs/getStyle.js"></script>
+    <script type="text/javascript">
+        angular.module("demo", ["css"]).run(function(cssTool){
+            var oDiv = document.getElementsByClassName("class1")[0];
+            console.log("div的width为：" + cssTool.getStyle(oDiv, "width"));
+            console.log("div的height为：" + cssTool.getStyle(oDiv, "height"));
+            console.log("div的opacity为：" + cssTool.getStyle(oDiv, "opacity"));
+            console.log("div的backgroundColor为：" + cssTool.getStyle(oDiv, "background-color"));
+        });
+    </script>
+</body>
+</html>
